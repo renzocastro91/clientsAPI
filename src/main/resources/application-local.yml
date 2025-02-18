@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=proyectoInicial;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: admin1234
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    # Creación automática de tablas (Hibernate)
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  max-http-request-header-size: 20KB
+  port: 8080
+  servlet:
+    context-path: /personas
+
+api-clima:
+  path: /data/2.5/weather
+  uri: https://api.openweathermap.org
+
+proyecto-inicial-db:
+  datasource:
+    jdbcUrl: jdbc:sqlserver://localhost:1433;databaseName=proyectoInicial;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: admin1234
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
