@@ -20,9 +20,32 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation "org.springframework.boot:spring-boot-starter-jdbc"
+
+
+	implementation "org.apache.camel.springboot:camel-jackson-starter:4.5.0"
+	implementation 'org.apache.camel.springboot:camel-spring-boot-starter:4.9.0'
+	implementation "org.apache.camel.springboot:camel-jdbc-starter:4.5.0"
+	implementation 'org.apache.camel:camel-http:3.20.5'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+	implementation "com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17"
+
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Dependencia principal de MapStruct
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+	// Procesador de anotaciones para MapStruct
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+	// Si usas Lombok junto con MapStruct
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
 tasks.named('test') {
