@@ -18,10 +18,27 @@ repositories {
 }
 
 dependencies {
+
+	// Dependencias de Spring Boot
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation "org.springframework.boot:spring-boot-starter-jdbc"
+	implementation 'org.projectlombok:lombok'
 
+	// Dependencias de Apache Camel
+	implementation 'org.apache.camel.springboot:camel-spring-boot-starter:3.21.0'
+	implementation 'org.apache.camel:camel-http:3.21.0'
+
+	// Apache Camel HTTP Component
+	implementation 'org.apache.camel:camel-http:3.21.0'
+
+	// Dependencias de Retrofit
+	implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+	implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
+
+	// Driver de SQL Server
+	implementation "com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17"
+	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 
 	implementation "org.apache.camel.springboot:camel-jackson-starter:4.5.0"
 	implementation 'org.apache.camel.springboot:camel-spring-boot-starter:4.9.0'
@@ -29,12 +46,15 @@ dependencies {
 	implementation 'org.apache.camel:camel-http:3.20.5'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 
-	implementation "com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17"
+	// Pool de conexiones HikariCP
+	implementation 'com.zaxxer:HikariCP:5.0.1'
+
+	testImplementation 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// Dependencia principal de MapStruct
@@ -44,8 +64,8 @@ dependencies {
 	// Si usas Lombok junto con MapStruct
 	compileOnly 'org.projectlombok:lombok:1.18.30'
 	annotationProcessor 'org.projectlombok:lombok:1.18.30'
-
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.projectlombok:lombok:1.18.28'
+	annotationProcessor 'org.projectlombok:lombok:1.18.28'
 }
 
 tasks.named('test') {
