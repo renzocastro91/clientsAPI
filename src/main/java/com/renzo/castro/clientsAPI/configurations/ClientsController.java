@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 
 @Configuration
-public class DataSourceConfig {
+public class ClientsController {
 
     @Bean(name = "clientsAPI")
     @ConfigurationProperties(prefix = "clients-api-db.datasource")
