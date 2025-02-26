@@ -1,61 +1,64 @@
 package com.renzo.castro.clientsAPI.services;
 
-import com.renzo.castro.clientsAPI.client.WeatherApiClient;
-import com.renzo.castro.clientsAPI.models.dtos.WeatherResponseDTO;
-import com.renzo.castro.clientsAPI.models.Clients;
+import com.renzo.castro.clientsAPI.clients.WeatherApiClient;
 import com.renzo.castro.clientsAPI.models.Weather;
+import com.renzo.castro.clientsAPI.models.dtos.WeatherResponseDTO;
+import com.renzo.castro.clientsAPI.models.dtos.componentsApiResponse.CurrentWeatherDTO;
 import com.renzo.castro.clientsAPI.repositories.WeatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Response;
-
 import java.util.Optional;
 
 @Service
 public class WeatherService {
 
-    @Autowired
-    private WeatherApiClient weatherApiClient;
+    private final WeatherRepository weatherRepository;
+    private final WeatherApiClient weatherApiClient;
+
 
     @Autowired
-    private WeatherRepository weatherRepository;
-
-    /**
-     * Obtener el clima de un usuario por ID
-     */
-    public Optional<Weather> getWeatherByClientId(Long clientId) {
-        return weatherRepository.findById(clientId);
+    public WeatherService(WeatherRepository weatherRepository, WeatherApiClient weatherApiClient) {
+        this.weatherRepository = weatherRepository;
+        this.weatherApiClient = weatherApiClient;
     }
 
-    public void fetchAndSaveWeather(Clients client) {
-        try {
-            Call<WeatherResponseDTO> call = weatherApiClient.getWeather(
-                    client.getLatitude(), client.getLongitude(), true
-            );
+    public Optional<Weather> getWeatherByClientId(Long clientId) {
+        return weatherRepository.findByClientId(clientId);
+    }
 
+    public Weather fetchAndSaveWeather(double latitude, double longitude, Long clientId) {
+        try {
+            // 🔹 Llamar a la API del clima con los parámetros recibidos
+            Call<WeatherResponseDTO> call = weatherApiClient.getCurrentWeather(latitude, longitude, true);
             Response<WeatherResponseDTO> response = call.execute();
 
             if (response.isSuccessful() && response.body() != null) {
-                WeatherResponseDTO weatherDTO = response.body();
+                WeatherResponseDTO weatherResponseDTO = response.body();
+                CurrentWeatherDTO weatherDTO = weatherResponseDTO.getCurrent_weather();
 
-                Weather weather = Weather.builder()
-                        .time(weatherDTO.getCurrent_weather().getTime())
-                        .temperature(weatherDTO.getCurrent_weather().getTemperature())
-                        .windspeed(weatherDTO.getCurrent_weather().getWindspeed())
-                        .winddirection(weatherDTO.getCurrent_weather().getWinddirection())
-                        .isDay(weatherDTO.getCurrent_weather().is_day())
-                        .weathercode(weatherDTO.getCurrent_weather().getWeathercode())
-                        .client(client)
-                        .build();
+                // 🔹 Crear objeto `Weather`
+                Weather weather = new Weather();
+                weather.setTime(weatherDTO.getTime());
+                weather.setTemperature(weatherDTO.getTemperature());
+                weather.setWindspeed(weatherDTO.getWindspeed());
+                weather.setWinddirection(weatherDTO.getWinddirection());
+                weather.setIsDay(weatherDTO.getIs_day());
+                weather.setWeathercode(weatherDTO.getWeathercode());
+                weather.setClientId(clientId);
 
-                weatherRepository.save(weather);
+                // 🔹 Guardar en la base de datos
+                return weatherRepository.save(weather);
             } else {
-                throw new RuntimeException("Error al obtener el clima");
+                throw new RuntimeException("Error en la API del clima: " + response.errorBody().string());
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error al procesar la API del clima");
+            throw new RuntimeException("Fallo en la solicitud a Open-Meteo", e);
         }
     }
 }
+
+
+
+
