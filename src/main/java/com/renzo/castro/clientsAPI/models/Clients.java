@@ -1,9 +1,8 @@
 package com.renzo.castro.clientsAPI.models;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Entity
@@ -11,7 +10,6 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Clients {
 
@@ -21,47 +19,95 @@ public class Clients {
 
     @NotBlank(message = "First name cannot be blank")
     @Size(min = 2, message = "First name must have at least 2 characters")
-    @JsonProperty("first")
+    @Column(nullable = false)
     private String firstName;
 
     @NotBlank(message = "Last name cannot be blank")
-    @JsonProperty("last")
+    @Column(nullable = false)
     private String lastName;
 
     @Email(message = "Invalid email format")
     @NotBlank(message = "Email cannot be blank")
+    @Column(unique = true, nullable = false)
     private String email;
 
     @NotBlank(message = "Phone cannot be blank")
+    @Column(nullable = false)
     private String phone;
 
     @NotBlank(message = "Gender cannot be blank")
+    @Column(nullable = false)
     private String gender;
 
     @NotBlank(message = "Country cannot be blank")
+    @Column(nullable = false)
     private String country;
 
     @NotBlank(message = "City cannot be blank")
+    @Column(nullable = false)
     private String city;
 
-    @NotBlank(message = "Latitude is required")
+    @NotNull(message = "Latitude is required")
+    @Column(nullable = false)
     private Double latitude;
 
-    @NotBlank(message = "Longitude is required")
+    @NotNull(message = "Longitude is required")
+    @Column(nullable = false)
     private Double longitude;
 
-    @Column(unique = true, nullable = false)
     @NotBlank(message = "Unique key is required")
+    @Column(unique = true, nullable = false)
     private String uniqueKey;
 
-    @Column(unique = true, nullable = false)
     @NotBlank(message = "UUID is required")
+    @Column(unique = true, nullable = false)
     private String uuid;
 
     @NotBlank(message = "Username cannot be blank")
+    @Column(unique = true, nullable = false)
     private String username;
 
     @NotBlank(message = "Password cannot be blank")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
+    @Column(nullable = false)
     private String password;
+
+    // Constructor con todos los argumentos, útil para @Builder
+    public Clients(Long id, String firstName, String lastName, String email, String phone,
+                   String gender, String country, String city, Double latitude, Double longitude,
+                   String uniqueKey, String uuid, String username, String password) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.gender = gender;
+        this.country = country;
+        this.city = city;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.uniqueKey = uniqueKey;
+        this.uuid = uuid;
+        this.username = username;
+        this.password = password;
+    }
+
+    @JsonProperty("first")
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @JsonProperty("last")
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
 }
