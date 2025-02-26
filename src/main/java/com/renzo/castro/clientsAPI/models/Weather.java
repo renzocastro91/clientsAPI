@@ -19,10 +19,9 @@ public class Weather {
     private double temperature;
     private double windspeed;
     private int winddirection;
-    private boolean isDay;
+    private int isDay;
     private int weathercode;
 
-    @OneToOne
-    @JoinColumn(name = "client_id", nullable = false)
-    private Clients client;
+    @Column(name = "client_id", nullable = false)
+    private Long clientId;
 }
