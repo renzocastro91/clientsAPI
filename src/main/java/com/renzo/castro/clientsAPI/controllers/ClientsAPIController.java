@@ -2,12 +2,12 @@ package com.renzo.castro.clientsAPI.controllers;
 
 import com.renzo.castro.clientsAPI.models.Clients;
 import com.renzo.castro.clientsAPI.services.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/clients")
@@ -24,16 +24,15 @@ public class ClientsAPIController {
         return userService.getAllClients();
     }
 
-    /**
-     * Obtener un cliente por ID
-     */
     @GetMapping("/{id}")
-    public Optional<Clients> getClientById(@PathVariable Long id) {
-        return userService.getClientById(id);
+    public ResponseEntity<Clients> getClientById(@PathVariable Long id) {
+        return userService.getClientById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build()); // ✅ Evitamos devolver Optional
     }
 
     /**
-     * Importar un nuevo cliente desde la API externa
+     * Importar un nuevo cliente desde la API externa y obtener su clima
      */
     @PostMapping("/import")
     public Clients importUser() {
