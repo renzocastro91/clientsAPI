@@ -4,21 +4,46 @@ import com.renzo.castro.clientsAPI.models.Clients;
 import com.renzo.castro.clientsAPI.models.dtos.UserResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-@Component
 public interface ClientsMapper {
-    ClientsMapper INSTANCE = Mappers.getMapper(ClientsMapper.class);
 
-    UserResponseDTO fromUserResponseDTO(Clients client);
+    /**
+     * Convierte un objeto Clients en UserResponseDTO.
+     *
+     * @param client Objeto Clients a convertir.
+     * @return UserResponseDTO correspondiente.
+     */
+    @Mapping(source = "firstName", target = "name.first")
+    @Mapping(source = "lastName", target = "name.last")
+    UserResponseDTO toUserResponseDTO(Clients client);
 
+    /**
+     * Convierte un objeto UserResponseDTO en Clients.
+     *
+     * @param userResponseDTO Objeto UserResponseDTO a convertir.
+     * @return Clients correspondiente.
+     */
     @Mapping(source = "name.first", target = "firstName")
     @Mapping(source = "name.last", target = "lastName")
-    Clients fromClients(UserResponseDTO userResponseDTO);
+    @Mapping(source = "login.uuid", target = "uuid")
+    @Mapping(source = "login.username", target = "username")
+    @Mapping(source = "login.password", target = "password")
+    @Mapping(source = "email", target = "email")
+    @Mapping(source = "phone", target = "phone")
+    @Mapping(source = "gender", target = "gender")
+    @Mapping(source = "location.city", target = "city")
+    @Mapping(source = "location.country", target = "country")
+    @Mapping(source = "location.coordinates.latitude", target = "latitude")
+    @Mapping(source = "location.coordinates.longitude", target = "longitude")
+    Clients toClients(UserResponseDTO userResponseDTO);
 
-    List<UserResponseDTO> fromListClients(List<Clients> Clients);
+    /**
+     * Convierte una lista de objetos Clients en una lista de UserResponseDTO.
+     *
+     * @param clients Lista de objetos Clients.
+     * @return Lista de UserResponseDTO correspondiente.
+     */
+    List<UserResponseDTO> toUserResponseDTOList(List<Clients> clients);
 }
