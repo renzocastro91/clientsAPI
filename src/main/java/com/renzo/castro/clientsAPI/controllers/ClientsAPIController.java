@@ -2,6 +2,7 @@ package com.renzo.castro.clientsAPI.controllers;
 
 import com.renzo.castro.clientsAPI.models.Clients;
 import com.renzo.castro.clientsAPI.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,7 +67,7 @@ public class ClientsAPIController {
      * @return Cliente actualizado o respuesta 404 si no existe.
      */
     @PatchMapping("/{id}")
-    public ResponseEntity<Clients> updateClient(@PathVariable Long id, @RequestBody Clients client) {
+    public ResponseEntity<Clients> updateClient(@PathVariable Long id, @Valid @RequestBody Clients client) {
         return userService.updateClient(id, client)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
