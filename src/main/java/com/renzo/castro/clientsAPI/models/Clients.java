@@ -1,6 +1,9 @@
 package com.renzo.castro.clientsAPI.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.renzo.castro.clientsAPI.validators.EmailValid;
+import com.renzo.castro.clientsAPI.validators.NameValid;
+import com.renzo.castro.clientsAPI.validators.PhoneValid;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -18,19 +21,21 @@ public class Clients {
     private Long id;
 
     @NotBlank(message = "First name cannot be blank")
-    @Size(min = 2, message = "First name must have at least 2 characters")
+    @NameValid
     @Column(nullable = false)
     private String firstName;
 
     @NotBlank(message = "Last name cannot be blank")
+    @NameValid
     @Column(nullable = false)
     private String lastName;
 
-    @Email(message = "Invalid email format")
+    @EmailValid
     @NotBlank(message = "Email cannot be blank")
     @Column(unique = true, nullable = false)
     private String email;
 
+    @PhoneValid
     @NotBlank(message = "Phone cannot be blank")
     @Column(nullable = false)
     private String phone;
