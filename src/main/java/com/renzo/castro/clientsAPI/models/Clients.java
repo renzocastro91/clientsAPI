@@ -1,4 +1,5 @@
 package com.renzo.castro.clientsAPI.models;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -20,9 +21,11 @@ public class Clients {
 
     @NotBlank(message = "First name cannot be blank")
     @Size(min = 2, message = "First name must have at least 2 characters")
+    @JsonProperty("first")
     private String firstName;
 
     @NotBlank(message = "Last name cannot be blank")
+    @JsonProperty("last")
     private String lastName;
 
     @Email(message = "Invalid email format")
@@ -42,10 +45,10 @@ public class Clients {
     private String city;
 
     @NotBlank(message = "Latitude is required")
-    private String latitude;
+    private Double latitude;
 
     @NotBlank(message = "Longitude is required")
-    private String longitude;
+    private Double longitude;
 
     @Column(unique = true, nullable = false)
     @NotBlank(message = "Unique key is required")
@@ -61,6 +64,4 @@ public class Clients {
     @NotBlank(message = "Password cannot be blank")
     private String password;
 
-    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
-    private Weather weather;
 }
