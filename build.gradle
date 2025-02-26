@@ -24,14 +24,20 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation "org.springframework.boot:spring-boot-starter-jdbc"
 	implementation 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+	annotationProcessor 'org.projectlombok:lombok'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// Dependencias de Apache Camel
 	implementation 'org.apache.camel.springboot:camel-spring-boot-starter:3.21.0'
 	implementation 'org.apache.camel:camel-http:3.21.0'
-
-	// Apache Camel HTTP Component
 	implementation 'org.apache.camel:camel-http:3.21.0'
 	implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+	implementation "org.apache.camel.springboot:camel-jackson-starter:4.5.0"
+	implementation 'org.apache.camel.springboot:camel-spring-boot-starter:4.9.0'
+	implementation "org.apache.camel.springboot:camel-jdbc-starter:4.5.0"
+	implementation 'org.apache.camel:camel-http:3.20.5'
 
 	// Dependencias de Retrofit
 	implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -44,27 +50,22 @@ dependencies {
 	implementation "com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17"
 	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 
-	implementation "org.apache.camel.springboot:camel-jackson-starter:4.5.0"
-	implementation 'org.apache.camel.springboot:camel-spring-boot-starter:4.9.0'
-	implementation "org.apache.camel.springboot:camel-jdbc-starter:4.5.0"
-	implementation 'org.apache.camel:camel-http:3.20.5'
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+	// Swagger UI
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
 	// Pool de conexiones HikariCP
 	implementation 'com.zaxxer:HikariCP:5.0.1'
 
+	// Test
 	testImplementation 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
-	annotationProcessor 'org.projectlombok:lombok'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
 	// Dependencia principal de MapStruct
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+
 	// Procesador de anotaciones para MapStruct
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
 	// Si usas Lombok junto con MapStruct
 	compileOnly 'org.projectlombok:lombok:1.18.30'
 	annotationProcessor 'org.projectlombok:lombok:1.18.30'
