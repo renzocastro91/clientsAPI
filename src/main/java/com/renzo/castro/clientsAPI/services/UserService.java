@@ -55,6 +55,13 @@ public class UserService {
     }
 
     /**
+     * Obtener cliente por username
+     */
+    public Optional<Clients> getClientByUsername(String username) {
+        return clientsRepository.findByUsername(username);
+    }
+
+    /**
      * Actualizar cliente por ID de forma parcial
      */
     public Optional<Clients> updateClient(Long id, Clients updatedClient) {

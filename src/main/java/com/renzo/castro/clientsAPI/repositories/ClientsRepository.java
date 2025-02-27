@@ -12,4 +12,7 @@ public interface ClientsRepository extends JpaRepository<Clients, Long> {
 
     @Transactional(readOnly = true)
     Optional<Clients> findByUuid(String uuid);
+
+    @Transactional(readOnly = true)
+    Optional<Clients> findByUsername(String username);
 }

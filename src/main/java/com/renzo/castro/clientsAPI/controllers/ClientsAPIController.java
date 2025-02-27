@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controlador REST para la gestión de clientes.
@@ -46,6 +47,19 @@ public class ClientsAPIController {
         return userService.getClientById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Obtiene un cliente por su ID.
+     *
+     * @param username Identificador del cliente.
+     * @return Cliente encontrado o respuesta 404 si no existe.
+     */
+    @GetMapping("/username/{username}")
+    public ResponseEntity<Clients> getClientByUsername(@PathVariable String username) {
+        Optional<Clients> client = userService.getClientByUsername(username);
+        return client.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     /**
