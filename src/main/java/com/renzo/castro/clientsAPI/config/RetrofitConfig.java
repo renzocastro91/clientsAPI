@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class RetrofitConfig {
 
     private static final String BASE_URL = "https://api.open-meteo.com/v1/";
-    private static final int TIMEOUT = 10; // Tiempo de espera en segundos
+    private static final int TIMEOUT = 10;
 
     /**
      * Configura un cliente HTTP con interceptor de logs para facilitar la depuración.
