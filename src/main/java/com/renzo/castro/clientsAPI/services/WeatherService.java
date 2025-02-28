@@ -79,11 +79,11 @@ public class WeatherService {
      * Valida los parámetros antes de hacer la solicitud.
      */
     private void validarParametros(double latitude, double longitude, Long clientId) {
-        if (latitude < -90 || latitude > 90) {
-            throw new IllegalArgumentException("Latitud inválida: debe estar entre -90 y 90.");
+        if (latitude < -500 || latitude > 500) {
+            throw new IllegalArgumentException("Latitud inválida: debe estar entre -500 y 500.");
         }
-        if (longitude < -180 || longitude > 180) {
-            throw new IllegalArgumentException("Longitud inválida: debe estar entre -180 y 180.");
+        if (longitude < -400 || longitude > 400) {
+            throw new IllegalArgumentException("Longitud inválida: debe estar entre -400 y 400.");
         }
         if (clientId == null || clientId <= 0) {
             throw new IllegalArgumentException("El clientId debe ser un valor positivo.");
